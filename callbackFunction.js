@@ -32,3 +32,6 @@ attachEventListener()
 
 //we need to remove eventListenert when we not useing it beause it is heavey 
 //in upper example remove the event listiner th ewe will get garbage collection also like count int uperre code
+
+//callbacke is super power full for handling aync proginmg in js
+//issue with callbak is 1) callback hell like nested callback 2)insersion of control=>this we pass callback to aother function to another funtion givin the conteol to onther function  and we dont no it will excute or not
