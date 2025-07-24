@@ -19,6 +19,9 @@ proceedToPyment(orderId);
 // or  a conatiner for future value
 //or Promise ia an object represnting the eventual comletion or failure of an asynchronus operation
 
+
+//An asynchronous operation is something that doesn't happen immediately
+
 const promise=createOrder(card);//provied empty object wiht some data
 //{data:undefine} ather time or run this line runs => {data: OrderDetails} aftehr tahat we will attack the callback fucntion to this prmois object
 
