@@ -1,4 +1,8 @@
-var a=10;
-// console.log(++a);
-// console.log(a++);
-// console.log(a);
+// function abcd(){
+//     let a=12;
+//     function def(){
+//         console.log(a);
+//     }
+//     def()
+// }
+// abcd()

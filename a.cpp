@@ -1,83 +1,57 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-vector<int> primes;
-map<pair<int,int>, int> memo;
+int main() {
+    int n;
+    cin >> n;
+    vector<int> strengths(n);
+    for (int i = 0; i < n; i++) {
+        cin >> strengths[i];
+    }
 
-void generatePrimes() {
-    vector<bool> isPrime(201, true);
-    isPrime[0] = isPrime[1] = false;
-    
-    for (int i = 2; i <= 200; i++) {
-        if (isPrime[i]) {
-            primes.push_back(i);
-            for (int j = i * i; j <= 200; j += i) {
-                isPrime[j] = false;
+    int m;
+    cin >> m;
+    vector<pair<char, int>> actions;
+    for (int i = 0; i < m; i++) {
+        char act;
+        int team;
+        cin >> act >> team;
+        actions.push_back(make_pair(act, team));
+    }
+
+    vector<bool> available(n, true);
+    long team1_strength = 0, team2_strength = 0;
+
+    for (int i = 0; i < m; i++) {
+        int max_index = -1;
+        for (int j = 0; j < n; j++) {
+            if (available[j]) {
+                if (max_index == -1 || strengths[j] > strengths[max_index]) {
+                    max_index = j;
+                }
             }
         }
-    }
-}
-
-int grundy(int x, int y) {
-    if (x == 0 && y == 0) return 0;
-    
-    pair<int,int> state = {x, y};
-    if (memo.find(state) != memo.end()) {
-        return memo[state];
-    }
-    
-    set<int> reachable;
-    
-    // Try all possible moves
-    for (int prime : primes) {
-        // Move in x direction
-        if (x >= prime) {
-            reachable.insert(grundy(x - prime, y));
+        if (max_index == -1) {
+            break;
         }
-        // Move in y direction
-        if (y >= prime) {
-            reachable.insert(grundy(x, y - prime));
-        }
-        // No point checking larger primes
-        if (prime > max(x, y)) break;
-    }
-    
-    // Find mex (minimum excludant)
-    int mex = 0;
-    while (reachable.count(mex)) {
-        mex++;
-    }
-    
-    return memo[state] = mex;
-}
 
-string solve(int N, vector<pair<int,int>>& stones) {
-    generatePrimes();
-    memo.clear();
-    
-    int xorSum = 0;
-    for (auto& stone : stones) {
-        xorSum ^= grundy(stone.first, stone.second);
-    }
-    
-    return (xorSum != 0) ? "A" : "B";
-}
+        char action_type = actions[i].first;
+        int team = actions[i].second;
 
-int main() {
-    int T;
-    cin >> T;
-    
-    while (T--) {
-        int N;
-        cin >> N;
-        
-        vector<pair<int,int>> stones(N);
-        for (int i = 0; i < N; i++) {
-            cin >> stones[i].first >> stones[i].second;
+        if (action_type == 'b') {
+            available[max_index] = false;
+        } else if (action_type == 'p') {
+            if (team == 1) {
+                team1_strength += strengths[max_index];
+            } else if (team == 2) {
+                team2_strength += strengths[max_index];
+            }
+            available[max_index] = false;
         }
-        
-        cout << solve(N, stones) << "\n";
     }
-    
+
+    cout << (team1_strength - team2_strength) << endl;
+
     return 0;
 }
