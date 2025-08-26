@@ -1,4 +1,9 @@
+What is a Closure in JavaScript?
 
+A closure is created when a function remembers its lexical scope (the variables available in the environment where it was created) even after the outer function has finished executing.
+
+In simple terms:
+👉 A closure allows a function to access variables from its parent scope, even after that parent function has returned.
 
 //var useing for settimeout we need to use closer to print 1 2 3 4 5
 //in this we will get new memo evrey size or every value
