@@ -63,6 +63,7 @@ handlePromise2().catch((err)=>console.log(err));
 
 /*
 intervier quatiom
-1) what is asyn awit?=>asyn is keyword with function and asyn function is diffrent
-awit is use inside the asyn function only to handle promisees and this promies is ayncronis
+async is a keyword used to declare an asynchronous function. An async function always returns a Promise, even if you return a simple value.
+
+await is used inside an async function to pause execution until a Promise is resolved or rejected. It makes asynchronous code look and behave more like synchronous code, improving readability.
 */
