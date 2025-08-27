@@ -1,6 +1,6 @@
 const card=["shoes","pants","kurta"];
 // console.log(promise);
-//promis chanining
+//promis chanining  //for better example the code ios return by me only or chacinghg
 createOrder(card) //orderId
 .then(function(orderId){
     console.log(orderId);  
@@ -31,6 +31,7 @@ createOrder(card) //orderId
     console.log("No matter what happenes ,I will definiety be called");
     
 })
+
 //producer part
 
 function createOrder(card){
@@ -44,7 +45,7 @@ function createOrder(card){
         }
         const orderId ="12345";
         if(orderId){
-            setInterval(function(){
+            setTimeout(function(){
                 resolve(orderId)
             },5000);
             // resolve(orderId);
@@ -67,4 +68,67 @@ function showorderSummary(paymentInfo){
 function valdatcard(card){
     //validate card
     return true;
+}
+
+
+
+
+const box = ["shoes"];
+const promise = createBox(box);
+
+promise
+  .then(function (orderId) {
+    console.log("Order created with id:", orderId);
+    return processToPay(orderId);
+  })
+  .then(function (paymentInfo) {
+    console.log("Payment status:", paymentInfo);
+    return orderDone(paymentInfo);
+  })
+  .then(function (orderStatus) {
+    console.log("Order status:", orderStatus);
+    return summary(orderStatus);
+  })
+  .then(function (summaryInfo) {
+    console.log("Summary:", summaryInfo);
+  })
+  .catch(function (err) {
+    console.error("Error:", err.message);
+  });
+
+// ✅ Functions
+
+function createBox(card) {
+  return new Promise(function (res, rej) {
+    if (!validBox(card)) {
+      const err = new Error("Box is not correct");
+      rej(err);
+    }
+    // valid box;
+    const boxId = 123456;
+    res(boxId);
+  });
+}
+
+function processToPay(orderId) {
+  return new Promise(function (res, rej) {
+    // simulate payment success
+    res("Payment successful for order " + orderId);
+  });
+}
+
+function orderDone(paymentInfo) {
+  return new Promise(function (res, rej) {
+    res("Order confirmed → " + paymentInfo);
+  });
+}
+
+function summary(orderStatus) {
+  return new Promise(function (res, rej) {
+    res("Summary generated: " + orderStatus);
+  });
+}
+
+function validBox(card) {
+  return true;
 }

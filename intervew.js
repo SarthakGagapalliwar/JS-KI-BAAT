@@ -54,7 +54,7 @@ arr.splice(0, arr.length);
 
 To remove duplicate elements from an array in JavaScript,
 const arr = [1, 2, 2, 3, 4, 4, 5];
-const uniqueArr = [...new Set(arr)];
+const uniqueArr = [...new Set(arr)]; // we we dont use spred it will give only set not array
 console.log(uniqueArr); // [1, 2, 3, 4, 5]
 
 
@@ -201,16 +201,19 @@ arr.push(3);    // ✅ allowed
 arr = [4, 5];   // ❌ TypeError
 
 Feature	let	const
-Re-declaration	❌ No	❌ No
-Re-assignment	✅ Yes	❌ No
-Mutability	✅ Yes	✅ Yes (if non-primitive)
+Feature                  	var                 	 let	               const
+Re-declaration	        ✅ Yes (in same scope)  	❌ No	            ❌ No
+Re-assignment	          ✅ Yes	                  ✅ Yes	            ❌ No
+Mutability	          ✅ Yes (for objects too)	  ✅ Yes	            ✅ Yes (if object/array, properties can change)
+Scope	                 Function-scoped	           Block-scoped    	Block-scoped
+Hoisting	✅ Yes (initialized as undefined)	 ✅ Yes (but in TDZ)   	✅ Yes (but in TDZ)
 
 */
 
 
-let str="this is sharhrukh khan"
+let str = "this is sharhrukh khan"
 
-let newStr=str.split(' ').map((item)=>item[0].toUpperCase()+item.slice(1,item.length)+"\n").join(' '); //this will ot wors proparrty
+let newStr = str.split(' ').map((item) => item[0].toUpperCase() + item.slice(1, item.length) + "\n").join(' '); //this will ot wors proparrty
 let str2 = "this is sharhrukh khan";
 
 let newStr2 = str
@@ -224,9 +227,9 @@ console.log(newStr);
 console.log(newStr);
 
 
-console.log(typeof NaN);
-console.log(NaN==NaN); //NaN is not equal to anything, even itself. //false
-console.log(NaN===NaN); //same for thus //false
+console.log(typeof NaN); //number
+console.log(NaN == NaN); //NaN is not equal to anything, even itself. //false
+console.log(NaN === NaN); //same for thus //false
 
 
 // var a=10;
@@ -234,7 +237,7 @@ console.log(NaN===NaN); //same for thus //false
 // console.log(a++); //11
 // console.log(a);   //12
 
-let a=10;
+let a = 10;
 console.log(++a);   //11
 console.log(a++);   //11
 console.log(a);     //12

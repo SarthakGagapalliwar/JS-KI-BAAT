@@ -1,7 +1,7 @@
 //promise are use for asyn opration in js
 
 //code wihtout promiss by call back;
-
+const card1=["shoes", "pants", "kurtas"];
 createorder(card);//orderid
 proceedToPyment(orderId);
 
@@ -17,7 +17,7 @@ proceedToPyment(orderId);
 
 //what is promis? =>  like promise is a plaseHolder for certain period of time after  which will fill with the value of asyn oprations
 // or  a conatiner for future value
-//or Promise ia an object represnting the eventual comletion or failure of an asynchronus operation
+//or Promise is an object representing the eventual comletion or failure of an asynchronus operation
 
 
 //An asynchronous operation is something that doesn't happen immediately
@@ -80,3 +80,24 @@ createorder(card)
     return updateWllaetBancle(paymentInfo);
 })
 //We are chaining the Promises using .then(), so to avoid bugs(or losing the data), make sure each .then() returns the next function call
+
+
+
+
+//deteil promis 
+
+// when new Promis ((res,rej)=>{})   hten promis object is cretre {promisStatsus,  promisResult, promisFulFillReactions, promisRejectRecation, PromiseIsHnadled}
+
+//promise Capabolity => promise reslove reject
+
+//.then=>goes to promisFulFillReactions ct
+
+// PromisWorkingimaes check images
+
+
+
+
+
+// note microtaskQuese in this is have only promises then catch finaaly async and await queMicroctask
+
+//task queeuq alqay chcek that the microtaskQuese ie empty 
