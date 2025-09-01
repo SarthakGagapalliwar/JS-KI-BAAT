@@ -244,3 +244,22 @@ console.log(a);     //12
 
 
 // for const not possible
+
+
+// make a copy of the aarray
+let arr = [1,2,[3,4,5],6];
+
+let copyArray=arr; // in the if we cange the value in copyarray the original arary also affted;
+//(just we pass hte refence)
+
+
+let coppyArrya2=[...arr] //this will make the (shallow )copy mens copy the first level if we chcange in 
+//level 2 it will cahnge the orinial copy 
+coppyArrya2[2].push(5) //this will cahge in the original array also
+
+
+//for the deep copy 
+let copyArray3=JSON.parse(JSON.stringify(arr)); // no change in the oringal copy
+
+
+
