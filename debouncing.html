@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounce Example</title>
+</head>
+<body>
+    <input type="text" onkeyup="betterFunction(event.target.value)">
+    
+    <script>
+        let count = 1;
+
+        const getdata = (value) => {
+            console.log("fetch the api call", count++, value);
+        };
+
+        const debounce = (fun, delay) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fun(...args);
+                }, delay);
+            };
+        };
+
+        const betterFunction = debounce(getdata, 500);
+    </script>
+</body>
+</html>

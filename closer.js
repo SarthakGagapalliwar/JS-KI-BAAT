@@ -1,11 +1,11 @@
-What is a Closure in JavaScript?
+// What is a Closure in JavaScript?
 
-A closure is created when a function remembers its lexical scope (the variables available in the environment where it was created) even after the outer function has finished executing.
+// A closure is created when a function remembers its lexical scope (the variables available in the environment where it was created) even after the outer function has finished executing.
 
-In simple terms:
-👉 A closure allows a function to access variables from its parent scope, even after that parent function has returned.
+// In simple terms:
+// 👉 A closure allows a function to access variables from its parent scope, even after that parent function has returned.
 
-Closures work because JavaScript stores variables used by inner functions in the heap, not the stack, so they survive even after the outer function returns. Each call to the outer function creates a new closure with its own private memor
+// Closures work because JavaScript stores variables used by inner functions in the heap, not the stack, so they survive even after the outer function returns. Each call to the outer function creates a new closure with its own private memor
 
 
 
@@ -55,3 +55,27 @@ console.log(counter()); // 3
 
 
 
+
+
+
+// A closeer is the combination of a function bundle together(enclosed) wiht refencse to its
+// surrouding state (the lexical enviromrnt). in other words, aclosure gives you acess to an other
+//function scope from an inner function
+
+
+function adder(num){
+  function add(b){
+    console.log(num+b);
+  }
+
+  return add;
+}
+
+const addTo5=adder(5);
+const addTo10=adder(10);
+
+addTo5(2);
+addTo5(10);
+
+addTo10(2);
+ṇ

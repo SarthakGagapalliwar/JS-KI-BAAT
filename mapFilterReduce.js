@@ -95,3 +95,24 @@ const filteRiduce = users.reduce(function(acc, curr) {
     return acc;
 }, []); 
 console.log(filteRiduce);
+
+
+//all use in one;
+
+
+
+const products = [
+  { name: "Laptop",     price: 499, color: "white", inShoppingCart: true },
+  { name: "Smartphone", price: 899, color: "black", inShoppingCart: false },
+  { name: "Headphones", price: 50,  color: "white", inShoppingCart: false },
+  { name: "Tablet",     price: 199, color: "grey",  inShoppingCart: true },
+  { name: "Keyboard",   price: 210, color: "blue",  inShoppingCart: false }
+];
+
+const cardPrice= products.filter(p => p.inShoppingCart)
+                         .map(p => p.price * 0.5)
+                         .reduce((total,price)=>{
+                            return total+price
+                         },0)
+
+console.log(cardPrice);

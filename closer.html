@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="myname" style="font-size: 50px">Piysh Garg</h1>
+    <button id="my-btn">Click Me</button>
+
+    <script>
+
+        const myName = document.getElementById('myname');
+        const btn = document.getElementById('my-btn');
+
+        function makeYextSizer(size){
+            function changeSize(){
+                myName.style.fontSize = `${size}px`;
+            }
+
+            return changeSize;
+        }
+
+        const size12=makeYextSizer(12);
+        const size20=makeYextSizer(20);
+        const size72=makeYextSizer(72);
+
+        btn.addEventListener('click',size72);
+
+    </script>
+    
+</body>
+</html>

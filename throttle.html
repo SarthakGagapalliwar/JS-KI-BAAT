@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throttle Example</title>
+</head>
+
+<body>
+    <input type="text" id="search" placeholder="Type here...">
+    <button id="myid" onclick="newFun()">Hello</button>
+
+    <script>
+        //type1
+        /*
+        const onTime = (data) => {
+            console.log("fetch data after time:", data);
+        };
+        
+        const throttle = (fun, delay) => {
+            let lastCall = 0;
+            return (...args) => {
+                let now = Date.now();
+                if (now - lastCall < delay) {
+                    return;
+                }
+                lastCall = now;
+                return fun(...args);
+            };
+        };
+        
+        const fectdata = throttle(onTime, 5000);
+        
+        document.getElementById("search").addEventListener("keyup", (event) => {
+            fectdata(event.target.value);
+        });
+        */
+
+        //type 2;
+        const mythrottle = (fun, d) => {
+
+            return function (...args) {
+                fun(...args);
+                document.getElementById("myid").disabled = true;
+                setTimeout(() => {
+                    document.getElementById("myid").disabled = false;
+                }, d)
+            }
+        }
+
+        const newFun = mythrottle(() => {
+            const value = document.getElementById("search").value;
+            console.log("Input value:", value);
+        }, 5000)
+    </script>
+</body>
+
+</html>
