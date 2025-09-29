@@ -1,0 +1,26 @@
+1. id
+Unique identifier for one element in the whole page.
+Should be used only once in the document (no duplicates).
+Mosty used when:
+You need to uniquely select an element in JavaScript.
+You want a specific element’s style.
+
+2. class
+Reusable identifier for grouping multiple elements.
+You can use the same class on many elements.
+Mostly used for:
+Styling multiple elements the same way.
+Selecting groups of elements in JavaScript.
+
+data-* attributes
+Custom attributes that store extra information about an element.
+Don’t affect styling directly, but are useful for JavaScript.
+Format: data-name="value"
+Mostly used when:
+You need to attach extra data to an element without showing it.
+For example, product IDs, user info, etc.
+
+They are custom attributes you add to HTML elements to store extra information.
+They don’t affect how the element looks.
+They are meant for JavaScript to read/write.
+Access in JS via element.dataset.something

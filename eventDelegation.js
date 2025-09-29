@@ -19,7 +19,7 @@
 document.querySelector("#category").addEventListener('click',(e)=>{
     console.log("category parent click");
 
-    //if i clcick on any child the parent will clcik will print
+    //if i clcick on any child the parent w ill clcik will print
     console.log(e.target.id);
     if(e.target.tagName=='LI'){
         window.location.href="/"+e.target.id;

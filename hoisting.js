@@ -82,3 +82,46 @@ b1=100; //typeError => assigment to constant varibale
 
 
 //Yes — in JavaScript, const variables do have a temporal dead zone, just like let variables.
+
+
+
+
+
+
+
+
+
+/*
+✅1. Function Declarations (hoisted fully)
+greet(); // ✅ Works\
+function greet() {
+  console.log("Hello!");
+}
+  
+⚠️ 2. Function Expressions (not hoisted fully)
+sayHi(); // ❌ Error: Cannot access 'sayHi' before initialization
+const sayHi = function() {
+  console.log("Hi!");
+};
+
+Only the variable name is hoisted, not the function definition.
+Before assignment, it’s in the temporal dead zone (TDZ) if declared with let or const, or undefined if declared with var.
+
+
+
+
+⚠️ 3. Arrow Functions (same as function expressions)
+hello(); // ❌ Error: Cannot access 'hello' before initialization
+const hello = () => {
+  console.log("Hello!");
+};
+Behaves exactly like function expressions.
+Not hoisted as a function, only the variable is hoisted.
+
+
+Summary for quick revision:
+Function Declaration → Fully hoisted.
+Function Expression / Arrow Function → Variable hoisted, function not.
+Class → Not hoisted at all.
+
+*/
