@@ -111,3 +111,17 @@ function flattenArray(arr) {
 }
 
 console.log(flattenArray(arr1));
+
+
+
+//how to accesss objet key dynamically
+
+let user={
+    name:'anil',
+    age:30,
+    email:'anil@test.com'
+}
+let info="name";
+console.log(user.info); // this will give undefinr it will chek the cheak data of info not name
+// to acces the it we will use []
+console.log(user[info]);
