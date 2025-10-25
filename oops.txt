@@ -1,0 +1,1247 @@
+🌟 Passing Object to Function
+
+Just like we pass variables to functions, we can also pass objects.
+There are mainly three ways to pass an object to a function:
+
+1. Pass by Value
+
+    A copy of the object is passed.
+    Changes made inside the function do not affect the original object.
+
+    #include <iostream>
+    using namespace std;
+
+    class Student {
+    public:
+        string name;
+        int age;
+
+        void display() {
+            cout << "Name: " << name << ", Age: " << age << endl;
+        }
+    };
+    void printStudent(Student s) {  // Pass by value
+        s.age = 25;  // changes will not affect original
+        cout << "Inside Function: ";
+        s.display();
+    }
+    int main() {
+        Student s1;
+        s1.name = "Aman";
+        s1.age = 20;
+
+        printStudent(s1);  
+        cout << "Outside Function: ";
+        s1.display(); // still age = 20
+        return 0;
+    }
+    Output:
+    Inside Function: Name: Aman, Age: 25
+    Outside Function: Name: Aman, Age: 20
+
+2. Pass by Reference
+
+    The function works on the same object (no copy).
+    Changes made inside the function do affect the original object.
+
+    void updateStudent(Student &s) {  // Pass by reference
+        s.age = 25;  // this will update original object
+    }
+
+    int main() {
+        Student s1;
+        s1.name = "Aman";
+        s1.age = 20;
+
+        updateStudent(s1);
+        s1.display();  // age updated to 25
+        return 0;
+    }
+    Output:
+    Name: Aman, Age: 25
+
+3. Pass by Pointer
+
+    We pass the address of the object
+    Useful for dynamic memory or when we want to avoid copying large objects.
+
+    void updateStudent(Student *s) {  // Pass by pointer
+        s->age = 30;  // accessing using pointer
+    }
+    int main() {
+        Student s1;
+        s1.name = "Aman";
+        s1.age = 20;
+
+        updateStudent(&s1);
+        s1.display();  // age updated to 30
+        return 0;
+    }
+    Output:
+    Name: Aman, Age: 30
+
+
+
+if we make constructor and call a new object without constructor it will show error we need create empty default constructor for that
+
+🌟 Case 1: Only Parameterized Constructor (No Default Constructor)
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int age;
+
+    // Parameterized Constructor
+    Student(string n, int a) {
+        name = n;
+        age = a;
+    }
+
+    void display() {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+};
+
+int main() {
+    Student s1("Aman", 20);   // ✅ Works fine
+    Student s2;               // ❌ ERROR: no default constructor available
+
+    return 0;
+}
+
+🔹 Error you will see:
+error: no matching function for call to 'Student::Student()'
+
+
+👉 This happens because once you define your own constructor, the compiler does not automatically provide a default one.
+
+🌟 Case 2: Adding an Explicit Default Constructor
+
+To fix this, we add an empty default constructor:
+
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int age;
+   
+    Student() {                                  // Default Constructor
+        name = "Unknown";
+        age = 0;
+    }
+
+    // Parameterized Constructor
+    Student(string n, int a) {
+        name = n;
+        age = a;
+    }
+
+    void display() {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+};
+
+int main() {
+    Student s1("Aman", 20);   // Uses parameterized constructor
+    Student s2;               // Uses default constructor
+
+    s1.display();
+    s2.display();
+
+    return 0;
+}
+
+🔹 Output
+    Name: Aman, Age: 20
+    Name: Unknown, Age: 0
+    ✅ Summary:
+
+    If you only define a parameterized constructor, the compiler won’t create a default constructor for you.
+--------------------------------------------------------------------------------------------------------------------------
+
+    student * s3 = new student();
+    s3 stores the adress of new object created in heap memory
+    s3->age = 33;
+
+    (*s3).age = 23;
+
+    delete s3;
+
+
+if we do not provide any value in constructor it will have garbage value
+
+
+🌟 Constructor Overloading with Different Parameter Order
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int age;
+
+    // Constructor 1: (string, int)
+    Student(string n, int a) {
+        name = n;
+        age = a;
+    }
+
+    // Constructor 2: (int, string) → Same number of params but order is different
+    Student(int a, string n) {
+        name = n;
+        age = a;
+    }
+
+    void display() {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+};
+
+int main() {
+    Student s1("Aman", 20);   // Calls (string, int) constructor
+    Student s2(22, "Rahul");  // Calls (int, string) constructor
+
+    s1.display();
+    s2.display();
+
+    return 0;
+}
+
+🔹 Output
+Name: Aman, Age: 20
+Name: Rahul, Age: 22
+
+🌟 Key Points
+
+Same number of parameters but different order → Allowed ✅
+
+Compiler decides which constructor to call based on types and order of arguments.
+
+copy constructor create deep copy => if we modify it will not change 
+it is already present in contructor but we can also make it 
+
+🔹 Default Copy Constructor (Compiler-Generated)
+
+    The compiler automatically gives you a copy constructor if you don’t define one.
+    It performs a shallow copy → meaning it copies member variables as they are.
+    For primitive data types (like int, float), this is perfectly fine.
+    For pointers/dynamic memory, it just copies the address, not the actual content.
+    This causes two objects pointing to the same memory → problem when destructors run (double delete).
+
+🔹 User-Defined Copy Constructor
+
+    You write it yourself when you want to control the copy process.
+    Usually, this means making a deep copy => allocating new memory and copying the actual data, not just the pointer.
+
+Ensures each object has its own independent copy of data.
+Student s2  = s1;
+Student s2(s1) ;
+
+
+user defined 
+customer (customer b)
+cutomer c = b
+it will stuck in loop of copying
+🔹 What happens here?
+        Because if we don’t, the compiler would have to make a copy of the object to pass it as a parameter — and that 
+        copy would again call the copy constructor — leading to an infinite recursive loop 🔁💥
+
+👉 So after that line:
+        C and B are two different objects.
+        They just happen to have the same values in their member variables.
+
+
+Customer(Customer &B) {
+    name = B.name;
+    account_number = B.account_number;
+    balance = B.balance;
+}
+
+Customer b("aman",23,4440);
+Customer c = b ;
+
+🔹 What happens here?
+        When you write Customer C = B;, the copy constructor is called.
+        Inside the copy constructor, the data members of C are initialized with the values of B.
+
+👉 So after that line:
+        C and B are two different objects.
+
+        They just happen to have the same values in their member variables.
+
+🔹 Does changing C affect B?
+        No ❌.
+        Because C is a separate object, not a reference to B.
+        Changes in C will not reflect in B (unless your class holds pointers and you haven’t implemented deep copy).
+
+🔹 But then, does not reference mean “same object”?
+        That’s the key confusion.
+        When you call Customer C = B; → B is passed by reference only during the constructor call, to avoid copying.
+        But the constructor’s job is to create a new object (C) with the same data.
+        Once the constructor finishes, C and B are independent objects with the same values.
+
+        So:
+        Reference is temporary for constructor parameter (to avoid recursion).
+        The newly constructed object is a separate object.
+
+🔹 Best practice
+Usually, we also make it const reference:
+
+Customer(const Customer &B) {
+    name = B.name;
+    account_number = B.account_number;
+    balance = B.balance;
+}
+✅ Because we don’t want to accidentally modify B inside the copy constructor.
+🔹 const in C++
+        The keyword const means “cannot be modified”.
+        When you mark something const, you are promising the compiler (and yourself) that you won’t change its value.
+
+🔹 4. Shallow Copy vs Deep Copy
+Shallow Copy (Default)
+
+        Copies values bit by bit.
+
+        Pointer variables just copy addresses, not actual data.
+
+        Problem: Two objects point to same memory → double delete.
+
+Deep Copy (User-defined)
+
+        Allocates new memory.
+
+        Copies actual data, not just address.
+
+        Each object has its own copy → safe
+
+
+#include <iostream>
+using namespace std;
+
+class Number {
+public:
+int value;
+
+// Constructor
+Number(int n) {
+value = n;
+}
+
+// User-defined copy constructor
+Number(const Number &other) {
+value = other.value; // Copy the value from the source object
+}
+};
+
+int main() {
+Number num1(42); // Create an object using the constructor
+Number num2 = num1; // Use the user-defined copy constructor
+
+// Output the values of both objects
+cout << "Number 1: " << num1.value << endl;
+cout << "Number 2: " << num2.value << endl;
+
+return 0;
+}
+
+🌟 Destructor in C++
+🔹 Definition  nomal variable to apne aap hat jaege but jo dynamically alot hue hh vo present rehta hh so we have to release them
+
+A destructor is a special member function in C++ that is automatically called when an object goes out of scope or is explicitly destroyed.
+Its main job is to release resources (like memory, file handles, database connections) that the object acquired during its lifetime.
+
+
+class st{
+    public :
+    int *arr;
+    int size;
+
+    st(int s){
+        size = s;
+        arr = new int[size];
+    }
+
+    ~st(){
+        delete arr[]
+    }
+
+}
+
+🔹 Rules of Destructor
+
+        A class can have only one destructor (no overloading allowed).
+        Destructor has no return type and no parameters.
+        Called automatically when:
+        Object goes out of scope (end of block/function).
+        Program ends.
+        delete is called on a dynamically allocated object.
+Order of destruction:
+
+        Reverse order of construction (last created object is destroyed first).
+        If you don’t define a destructor, the compiler generates a default one (does nothing except cleanup for built-in types).
+
+🔹 Example 1: Simple Destructor
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+
+    Student(string n) {
+        name = n;
+        cout << "Constructor called for " << name << endl;
+    }
+
+    ~Student() {
+        cout << "Destructor called for " << name << endl;
+    }
+};
+
+int main() {
+    Student s1("Aman");
+    Student s2("Rahul");
+
+    cout << "Inside main function\n";
+    return 0;
+}
+
+Output:
+Constructor called for Aman
+Constructor called for Rahul
+Inside main function
+Destructor called for Rahul
+Destructor called for Aman
+
+
+✅ Notice destructors are called in reverse order of construction.
+
+🔹 Example 2: Destructor with Dynamic Memory
+
+class Test {
+    int *arr;
+    int size;
+public:
+    Test(int s) {
+        size = s;
+        arr = new int[size];   // dynamic allocation
+        cout << "Constructor: memory allocated\n";
+    }
+
+    ~Test() {
+        delete[] arr;  // free memory
+        cout << "Destructor: memory freed\n";
+    }
+};
+
+int main() {
+    Test t1(5);
+}
+
+Output:
+Constructor: memory allocated
+Destructor: memory freed
+
+
+👉 Without destructor, memory leak occurs.
+
+🔹 Why new uses Heap?
+    Because stack has limitations:
+
+    Stack is small → if you try to make a huge array (like int arr[1000000];), it may cause stack overflow.
+    Stack arrays must be fixed-size at compile time → cannot depend on user input.
+    Stack memory auto-deletes → not useful when you want data to survive beyond function scope.
+
+
+
+a-> b   == (*a).b
+
+🔹 Object Initialization in C++
+
+There are two main ways to create objects in C++:
+
+1. Normal Initialization (Stack Allocation)
+        #include <iostream>
+        using namespace std;
+
+        class Student {
+        public:
+            int id;
+            string name;
+
+            Student(int i, string n) {   // constructor
+                id = i;
+                name = n;
+            }
+
+            void display() {
+                cout << "ID: " << id << ", Name: " << name << endl;
+            }
+        };
+        int main() {
+            Student s1(1, "Aman");  // ✅ Normal initialization
+            s1.display();
+        }
+
+        Characteristics:
+
+        Object s1 is created on the stack.
+        Memory is automatically managed → destroyed when main() ends.
+        You access members using . (dot operator).
+        Lifetime = limited to the scope in which the object was created.
+        👉 Example: Good when you know the object’s lifetime and don’t need dynamic control.
+
+2. Pointer Initialization (Dynamic Allocation)
+        #include <iostream>
+        using namespace std;
+
+        class Student {
+        public:
+            int id;
+            string name;
+
+            Student(int i, string n) {
+                id = i;
+                name = n;
+            }
+
+            void display() {
+                cout << "ID: " << id << ", Name: " << name << endl;
+            }
+        };
+        int main() {
+            Student* s2 = new Student(2, "Kaushik");  // ✅ Pointer initialization
+            s2->display();
+
+            delete s2;  // ✅ must manually free memory
+        }
+
+Characteristics:
+
+        Object is created on the heap using new.
+        You must use -> to access members (because it is a pointer).
+        You must free memory with delete, otherwise => memory leak.
+        Lifetime = controlled manually (exists until delete is called).
+        👉 Example: Good when you need objects that live beyond the current scope, or when creating many objects dynamically (like in linked lists, trees, graphs).
+
+🔹 Key Differences
+Feature	                   Normal Initialization (Student s1;)	          Pointer Initialization (Student* s2 = new Student;)
+Memory Location	Stack	Heap
+Access	                                Dot (.)	Arrow (->)
+Lifetime	                            Ends when scope ends	                Until delete is called
+Memory Management	                    Automatic	Manual (delete)
+Performance                            	Faster (stack is quick)	                Slightly slower (heap allocation)
+Use Case	                             Small, temporary objects           	Long-lived or dynamically created objects
+
+
+🔹 Why is it Important?
+
+        Memory Management:
+        Stack is automatic → no leaks.
+        Heap is manual → flexible but risky.
+        Data Structures:
+
+        Linked lists, trees, graphs require heap objects (dynamic allocation).
+
+        Polymorphism (Inheritance):
+
+        Virtual functions often need pointers or references to achieve runtime polymorphism.
+
+        Base* b = new Derived();
+        b->show();  // runtime polymorphism
+        delete b;
+
+
+✅ In short:
+
+Use normal initialization for simple, temporary objects.
+
+Use pointer initialization when you need dynamic memory, polymorphism, or complex structures.
+
+📌 Access Modifiers in C++===================================================================================================
+
+Access modifiers define who can access the members (variables and functions) of a class.
+C++ provides three main access specifiers:
+
+Private
+
+Protected
+
+Public
+
+🔹 1. Private
+
+        Members declared as private are accessible only within the class.
+        Not accessible by objects or derived classes (unless friend class/function is used).
+        Default access modifier for class is private.
+
+        #include <iostream>
+        using namespace std;
+
+        class Student {
+        private:
+            int marks;  // private member
+
+        public:
+            void setMarks(int m) { marks = m; }
+            int getMarks() { return marks; }
+        };
+
+        int main() {
+            Student s1;
+            // s1.marks = 90; // ❌ Error: private member
+            s1.setMarks(90);   // ✅ Access via public method
+            cout << s1.getMarks();
+        }
+        Output:
+        90
+        Use Case:
+        Encapsulation: Keep internal state hidden and provide controlled access via getters/setters.
+
+🔹 2. Protected
+
+        Members declared as protected are accessible:
+        Inside the class itself
+        Inside derived classes
+        Not accessible by objects of the class.
+        Mainly used in inheritance.
+
+        #include <iostream>
+        using namespace std;
+
+        class Base {
+        protected:
+            int age;
+        };
+
+        class Derived : public Base {
+        public:
+            void setAge(int a) { age = a; }  // ✅ Accessible in derived class
+            int getAge() { return age; }
+        };
+
+        int main() {
+            Derived d;
+            // d.age = 25; // ❌ Error: protected member not accessible via object
+            d.setAge(25);
+            cout << d.getAge();
+        }
+        Output:
+        25
+
+        Use Case:
+        Let derived classes access parent’s data but hide it from outside world.
+
+🔹 3. Public
+
+        Members declared as public are accessible from anywhere:
+        Inside the class
+        Outside the class
+        Derived classes
+
+        #include <iostream>
+        using namespace std;
+        class Student {
+        public:
+            string name;
+        };
+        int main() {
+            Student s;
+            s.name = "Aman"; // ✅ Public member accessible
+            cout << s.name;
+        }
+        o/p = Aman
+
+        Use Case:
+        Methods that must be accessed freely, like interface functions.
+
+🔹 4. Default Access
+Keyword	Class Default	Struct Default
+Access	private	public
+
+Class → members are private by default
+
+Struct → members are public by default
+
+class A { int x; };   // x is private
+struct B { int y; };  // y is public
+
+🔹 5. Access Modifiers with Inheritance
+
+C++ inheritance modifies access as follows:
+
+Inheritance Type       	Base Public    	Base Protected	     Base Private
+Public      	        Public	    Protected	               Not inherited
+Protected	            Protected	Protected	             Not inherited
+Private	                Private	    Private	                Not inherited
+
+Example:
+
+class Base {
+public:
+    int a;
+protected:
+    int b;
+private:
+    int c;
+};
+
+class Derived : public Base {
+    void func() {
+        a = 1; // ✅ public member accessible
+        b = 2; // ✅ protected member accessible
+        // c = 3; // ❌ private member NOT accessible
+    }
+};
+---------------------------------------------------------------------------------
+🔹 6. Friend Keyword
+
+1. What is a friend in C++?
+
+        A friend is a function or class that is given access to the private and protected members of another class.
+        Normally, private and protected members of a class cannot be accessed from outside the class.
+        A friend bypasses this restriction.
+
+Key Points:
+
+        Friendship is not mutual. If A is a friend of B, B is not automatically a friend of A.
+        Friendship is not inherited. Subclasses do not inherit friends.
+        Friendship is granted explicitly by the class.
+
+2. Types of Friends
+
+        There are three main types of friends in C++
+        Friend Function
+        Friend Class
+        Friend Member Function
+
+1. What is a friend function?
+
+A friend function is a function not a member of a class but is allowed to access private and protected members of that class.
+
+Normally, private and protected members of a class are inaccessible outside the class.
+Declaring a function as a friend allows it special access.
+
+
+#include <iostream>
+using namespace std;
+
+class Student {
+private:
+    int age;
+
+public:
+    Student(int a){ age = a;   }
+    friend void showAge(Student &s);
+};
+
+// Friend function definition
+void showAge(Student &s) {
+    cout << "Age: " << s.age << endl;
+}
+
+int main() {
+    Student s1(21);
+    showAge(s1); // works because showAge is friend
+}
+
+
+2. What is a friend class?
+
+A friend class is a class whose all member functions can access the private and protected members of another class.
+
+If Class B is a friend of Class A, then B’s member functions can access A’s private/protected members.
+
+#include <iostream>
+using namespace std;
+
+class A {
+private:
+    int secret;
+public:
+    A(int s) : secret(s) {}
+
+    friend class B; // B is friend class
+};
+
+class B {
+public:
+    void reveal(A &a) {
+        cout << "Secret: " << a.secret << endl;
+    }
+};
+
+int main() {
+    A objA(42);
+    B objB;
+    objB.reveal(objA);
+}
+
+
+
+
+
+
+==============================================================================================================
+🔹 Static in C++
+
+6. When to Use Static  => they do not have their own this pointer, an only access static data members.
+
+Counting objects – track how many instances of a class exist.
+Persistent function variables – store state between function calls.
+Class-wide utility functions – static member functions.
+Encapsulation at file scope – avoid exposing globals to other files.
+
+The static keyword has different behaviors when applied to:
+
+        Local variables
+
+        Global variables
+
+        Class members (variables & functions)
+
+1️⃣ Static Local Variables / variable in function
+
+        A static variable inside a function is created only once and retains its value across multiple function calls.
+        Memory is allocated in the data segment (not stack).
+
+        #include <iostream>
+        using namespace std;
+        void counter() {
+            static int count = 0;  // Initialized only once
+            count++;
+            cout << "Count: " << count << endl;
+        }
+        int main() {
+            counter(); // Count: 1
+            counter(); // Count: 2
+            counter(); // Count: 3
+        }
+        ✅ Key Points:
+        Lifetime = entire program.
+        Scope = limited to the function.
+        Useful for counting, caching, or preserving state.
+
+2️⃣ Static Global Variables
+
+        A static global variable has file scope (it is only accessible in the file where it is declared).
+        Prevents name conflicts across multiple files in large projects.
+
+        #include <iostream>
+        using namespace std;
+        static int x = 10; // accessible only in this file
+        int main() {
+            cout << x;
+        }
+        ✅ Key Points:
+
+        Lifetime = entire program.
+        Scope = file only.
+        Good for encapsulation in multi-file projects.
+
+3️⃣ Static Data Members in Class
+
+        Belongs to the class, not to objects.
+        Shared among all objects → only one copy exists.
+        Must be defined outside the class.
+
+        #include <iostream>
+        using namespace std;
+
+        class Student {
+        public:
+            int id;
+            static int totalStudents; // Declaration
+
+            Student(int i) {
+                id = i;
+                totalStudents++;
+            }
+        };
+
+        // Definition (outside class)
+        int Student::totalStudents = 0;
+
+        int main() {
+            Student s1(1);
+            Student s2(2);
+
+            cout << "Total Students: " << Student::totalStudents;
+        }
+        Total Students: 2
+
+        ✅ Key Points:
+        Same value shared across objects.
+        Useful for counters, shared configs, global-like values.
+
+4️⃣ Static Member Functions
+
+        A static function inside a class:
+        Can be called without creating an object.
+        Can access only static members (since it has no this pointer).
+
+#include <iostream>
+using namespace std;
+
+class Employee {
+private:
+    int id;
+    string name;
+
+    static int employeeCount;
+
+public:
+    Employee(int i, string n) {
+        id = i;
+        name = n;
+        employeeCount++; // Increase count whenever object created
+    }
+
+    void display() {
+        cout << "ID: " << id << ", Name: " << name << endl;
+    }
+
+    // Static member function
+    static int getEmployeeCount() {
+        return employeeCount;
+    }
+};
+
+// Definition of static data member
+int Employee::employeeCount = 0;
+
+int main() {
+    Employee e1(1, "Aman");
+    Employee e2(2, "Kaushik");
+
+    e1.display();
+    e2.display();
+
+    // Calling static function without object
+    cout << "Total Employees: " << Employee::getEmployeeCount() << endl;
+}
+
+        ✅ Key Points:
+
+        Belongs to the class, not object.
+        Useful for utility/helper functions.
+
+🔹 Real-Life Analogy
+
+Static Local Variable → Like a shop’s cash register → remembers the last balance.
+
+Static Global Variable → Like a store room locked inside a shop → only that shop can use it.
+
+Static Class Variable → Like a shared notice board for all students in a school.
+
+Static Function → Like a school announcement system → doesn’t depend on a single student.
+
+=========================================================================================================
+
+1. What is the virtual keyword?
+
+In C++, the virtual keyword is used to enable runtime (dynamic) polymorphism. It tells the compiler:
+
+“If this function is overridden in a derived class, call the derived class version even when using a base class pointer/reference.”
+
+Without virtual, C++ uses compile-time (static) binding, calling the function of the type of the pointer, not the object it points to.
+
+2. Virtual Functions
+Definition
+
+A virtual function is a member function in the base class that can be overridden in derived classes, allowing dynamic dispatch.
+
+#include <iostream>
+using namespace std;
+
+class Base {
+public:
+    virtual void display() {
+        cout << "Base display" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void display() override {
+        cout << "Derived display" << endl;
+    }
+};
+
+int main() {
+    Base* ptr = new Derived();
+    ptr->display(); // Calls Derived display because of virtual function
+    delete ptr;
+}
+
+
+3. Virtual Tables (vtable) Concept
+
+    Every class with virtual functions has a vtable.
+    Vtable stores addresses of virtual functions.
+    Pointer to the object (vptr) points to correct function at runtime.
+    Overhead: slightly more memory (vptr) and runtime cost.
+
+4. Pure Virtual Functions and Abstract Classes
+
+    A pure virtual function has no definition in base class.
+    Syntax:
+
+    virtual void func() = 0;
+
+    A class with at least one pure virtual function becomes abstract → cannot create objects of it.
+    Derived class must override pure virtual function.
+
+
+5. Virtual Inheritance
+
+    Problem: Diamond problem in multiple inheritance.
+
+    class A { /.../ };
+    class B : virtual public A { /.../ };
+    class C : virtual public A { /.../ };
+    class D : public B, public C { /.../ };
+
+
+    virtual keyword in inheritance ensures only one copy of base class A exists in derived D.
+
+    Solves ambiguity and duplication.
+
+
+
+
+-------------------------------------------------------------------------------------
+Encapsulation is like the user did not make the data changes wrongly instead we apply validation by providing function
+like age = -5 wrong
+
+🌟 Encapsulation in C++
+        🔹 Definition
+
+        Encapsulation is the process of wrapping data (variables) and methods (functions) into a single unit called a class, while restricting direct access to the data.
+
+        👉 It is like putting sensitive data inside a box (class), and only allowing controlled access through functions (getters/setters).
+
+3️⃣ Principles Behind Encapsulation
+
+    Data Hiding
+    Use private or protected to hide internal data.
+    Prevents external code from directly modifying variables.
+
+    Controlled Access
+    Use public member functions to get or set data.
+    Example: validation in setter functions.
+
+    Abstraction
+    Users don’t need to know how the class works internally.
+    They just use public functions.
+
+🔹 Key Idea
+
+        Keep data members private (hidden from outside).
+        Provide public methods to access/modify data safely.
+        This ensures data security, abstraction, and controlled access.
+
+        🔹 Example 1: Basic Encapsulation
+        #include <iostream>
+        using namespace std;
+
+        class BankAccount {
+        private:   // Data hidden
+            int balance;
+
+        public:
+            BankAccount(int initial) {
+                balance = initial;
+            }
+            void deposit(int amount) {
+                if (amount > 0) balance += amount;
+            }
+            void withdraw(int amount) {
+                if (amount <= balance) balance -= amount;
+                else cout << "Insufficient funds!" << endl;
+            }
+            int getBalance() {   // Getter
+                return balance;
+            }
+        };
+        int main() {
+            BankAccount acc(1000);
+            acc.deposit(500);
+            acc.withdraw(200);
+            cout << "Current Balance: " << acc.getBalance() << endl;
+            return 0;
+        }
+        ✅ Output:
+        Current Balance: 1300
+
+
+👉 Here, balance is private, so it cannot be directly modified (like acc.balance = -999;).
+Instead, controlled access is given via deposit(), withdraw(), and getBalance().
+
+🔹 Example 2: Without Encapsulation (Bad Practice ❌)
+class BankAccount {
+public:   // Balance is public
+    int balance;
+};
+
+
+Now anyone can write:
+
+BankAccount acc;
+acc.balance = -1000000;  // ❌ Invalid data, no restriction
+
+
+👉 This is unsafe and breaks data integrity.
+
+🔹 Real-Life Analogy
+
+Think of ATM Machine:
+Your money (data) is stored in the bank (class).
+You cannot directly open the vault (private data).
+You must use an ATM card & PIN (methods) to access your money.
+The bank controls rules (e.g., withdrawal limit, sufficient balance check).
+
+👉 That’s Encapsulation: data hidden, access controlled.
+
+        🔹 Why Encapsulation is Important?
+
+        Data Security = >  Prevents direct modification of sensitive data.
+        Code Flexibility =>>  Internal implementation can change without affecting external code.
+        Data Integrity =>> Validation rules (like "balance cannot be negative").
+        Abstraction =>> Hides implementation details, shows only necessary methods.
+        Reusability ==> Encapsulated classes can be reused safely.
+
+        🔹 Interview-Worthy Points
+
+        Encapsulation = Data Hiding + Abstraction (not the same, but related).
+        Achieved using private, protected, and public access modifiers.
+        Opposite concept: friend (which can break encapsulation).
+        Helps in maintainability and scalability of large applications.
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Polymorphism - runtime => mein binding phele ho jati hh like which funciton to call 
+wherase in compile time => biding baaf 
+
+if we make pointer of base class pointing to derived class  --- and if we run function then it will be of base class
+it is the concept of late binding 
+
+we cant access variables of derived class , but if there same functions it means derivred then base gonna run
+
+but when we make derived class pointer , pointing derived var ... by this we modidy both base_var , dervied_var , calll derived show
+
+
+virtual function => 
+if we want ki base class pointer jo devired object ko point kr rha hh usse we want ki derived ka funtion run ho we use virtual key worf in base class funtion
+
+
+🔹 Abstract Base Class in C++
+
+An abstract base class in C++ is a class that cannot be instantiated (you can’t create objects of it).
+It is designed to act as a base (parent) class for other classes.
+
+it is like we gonna make this class and inhertit its funtion
+👉 It contains at least one pure virtual function.
+
+
++  in number adds that and in string concate that
+what if we make object and operate plus operator on that itwilll show error
+
+complex c3 = c1+c2
+here c1 is calling + function wiht argument c2 
+-------------------------------------------------------------------------------------------------------------
+
+🧠 What is Abstraction in C++?
+
+Abstraction means showing only essential details to the user and hiding the background (complex) implementation.
+
+It helps you focus on what an object does, not how it does it. 
+
+🧩 1️⃣ Using Abstract Classes (Pure Virtual Functions)
+
+You create a base class that only defines what should be done (not how).
+Derived classes define how it’s done. 
+
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    // Pure virtual function → provides abstraction
+    virtual void draw() = 0;
+};
+
+class Circle : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing a Circle\n";
+    }
+};
+
+class Rectangle : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing a Rectangle\n";
+    }
+};
+
+int main() {
+    Shape* s1 = new Circle();
+    Shape* s2 = new Rectangle();
+
+    s1->draw();   // Output: Drawing a Circle
+    s2->draw();   // Output: Drawing a Rectangle
+
+    delete s1;
+    delete s2;
+}
+
+
+🧩 2️⃣ Using Access Modifiers (Encapsulation-based Abstraction)
+
+We can hide unnecessary data and expose only necessary methods to the user using private, protected, and public.
+
+#include <iostream>
+using namespace std;
+
+class Car {
+private:
+    int speed;
+    void checkEngine() {  // hidden detail
+        cout << "Checking engine systems...\n";
+    }
+
+public:
+    void startCar() {
+        checkEngine();  // internal detail hidden from user
+        cout << "Car started successfully!\n";
+    }
+};
+
+int main() {
+    Car c1;
+    c1.startCar();   // user doesn’t know internal details
+}
+
+
+
+---------------------------------------------------------------------------------------------
+
+🧩 What is Inheritance?
+
+Inheritance is the process by which one class (child or derived class) acquires the properties and behaviors (data and functions) of another class (parent or base class).
+
+It helps in:
+
+Code reusability
+
+Reducing redundancy
+
+Maintaining hierarchical relationships
+
+Polymorphism (runtime behavior changing)

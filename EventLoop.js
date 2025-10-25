@@ -36,7 +36,7 @@ document.getElementById('btn')
     
 })
 console.log("end");
-
+ 
 // the first GEC craeded in callstack then it goers to concle then webapi method then log it print(start)
 
 //in second line documnet.  call DomApi it expess the html code  .addEvnt register the cb() with aatact the vent Click in the webApi

@@ -1,6 +1,9 @@
 //what is a callback Function in javaScript
 
-// A callback function in JavaScript is a function that is passed as an argument to another function and is executed after the main function completes its task. It's commonly used for asynchronous operations like API calls, timers, or event handling. For example, in setTimeout(() => { console.log("Hello"); }, 1000);, the arrow function is a callback that runs after 1 second.
+// A callback function in JavaScript is a function that is passed as an argument to
+// another function and is executed after the main function completes its task. 
+// It's commonly used for asynchronous operations like API calls, timers, or event handling.
+// For example, in setTimeout(() => { console.log("Hello"); }, 1000);, the arrow function is a callback that runs after 1 second.
 
 setTimeout(() => {
     console.log("timer");
@@ -13,7 +16,6 @@ function x(y){
 }
 x(function y(){  //this y is a callback function 
     console.log("y");
-    
 })
 
 
@@ -23,7 +25,6 @@ function attachEventListener(){
     document.querySelector('#clickMe').addEventListener("click",()=>{  //in this arrow function as callback function // this function will go to calltack as asynchronous function
         console.log("button click",++count);
         
-    
     })
 
 }

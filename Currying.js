@@ -14,7 +14,7 @@ function add(a){
         };
     };
 };
-
+ 
  console.log(add(2)(3)(5)); // it run only when all argugment are geting passed 
  console.log(add(2)(3)); // you will get the function return a+b+c; [Function (anonymous)]
 

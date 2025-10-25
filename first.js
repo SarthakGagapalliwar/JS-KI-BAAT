@@ -182,6 +182,15 @@ lekin splice apka sirf array ke sath kam karth hai
 2nd slice apke og array,string me koi change nahi karta
 lekin splice apke og array me change karta hai
 
+| Feature                 | **slice()**                            | **splice()**                               |
+| ----------------------- | -------------------------------------- | ------------------------------------------ |
+| Purpose                 | Extracts a portion                     | Adds/removes/replaces elements             |
+| Returns                 | New array (copied)                     | Removed elements                           |
+| Modifies Original Array | ❌ No                                   | ✅ Yes                                      |
+| Syntax                  | `arr.slice(start, end)`                | `arr.splice(start, deleteCount, ...items)` |
+| Use Case                | When you want to **copy/extract** data | When you want to **edit the array**        |
+
+
 */ 
 
 
@@ -189,31 +198,31 @@ lekin splice apke og array me change karta hai
 
 // reverse the string 
 
-// let string="my name is boss";
-// let finaldes=string.split(' ').map(word =>{
-//     let reveresWord=word.split('').reverse().join('');
+let string="my name is boss";
+let finaldes=string.split(' ').map(word =>{
+    let reveresWord=word.split('').reverse().join('');
 
-//     return(reveresWord);
+    return(reveresWord);
     
-// }).join(' ');
-// console.log(finaldes);
+}).join(' ');
+console.log(finaldes);
 
 
 
 
 //sting frist letere captital
 
-let sentence = "how are you boss i am fine";
+// let sentence = "how are you boss i am fine";
 
-const capitalize = (s) => {
-    let words=s.split(' ').map(word=>{
-        return word.charAt(0).toUpperCase() +word.slice(1).toLowerCase();
-    });
-    return words.join(' ');
-};
+// const capitalize = (s) => {
+//     let words=s.split(' ').map(word=>{
+//         return word.charAt(0).toUpperCase() +word.slice(1).toLowerCase();
+//     });
+//     return words.join(' ');
+// };
 
-let name = capitalize(sentence);
-console.log(name);
+// let name = capitalize(sentence);
+// console.log(name);
 
 
 // A closure is a function that "remembers" the variables from its lexical scope even when executed outside of that scope.

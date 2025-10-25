@@ -58,7 +58,7 @@ let mydiv =document.createElement('div');
 
 for(let i=1; i<=100; i++){
     let pare = document.createElement('p');
-    parseFloat.textContent="this is parar "+i;
+    pare.textContent="this is parar "+i;
     mydiv.appendChild(para);
 }
 document.body.appendChild(mydiv);
@@ -70,7 +70,6 @@ Since it’s not in DOM, the browser doesn’t do reflow/repaint for each <p>.
 When you finally append mydiv → browser performs 1 reflow + 1 repaint for the whole div.
 ✅ Much better than Code 1.
 */
-
 
 
 

@@ -52,13 +52,11 @@ async function handlePromise2(){
     catch(err){
         console.log(err);
     }
-
     
 }
 handlePromise2();
 //we can do lik this also for handling error also
 handlePromise2().catch((err)=>console.log(err));
-
 
 
 /*

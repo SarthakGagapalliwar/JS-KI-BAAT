@@ -1,4 +1,4 @@
-
+// An async function lets you write asynchronous (non-blocking) code that looks and behaves like synchronous code.
 //async fucntion always return a promise
 async function getdata() {
     return "namaste"  //either we return a promis from here or retun a value liike string int more in thie if return a string and int in this it wrap in the promise and return it;
@@ -37,8 +37,7 @@ const P2 = new Promise((res,rej)=>{
     //Js engine will not wait fomr to be resolve
     // P2.then((res)=>console.log(res));
     // console.log("nasmate js");
-    //in this firs namste js fil print then promise resolve will print
-    
+    //in this firs namste js fil print then promise resolve will print 
 }
 PromiseNoasyn();
 
@@ -81,7 +80,6 @@ async function handlePromise(){
 
 }
 handlePromise();
-
 
 
 //empty
@@ -135,3 +133,13 @@ console.log(val3);
 
 
 //realword example in file asyncawit2
+
+
+/*
+| Reason                                       | Explanation                                                                                                                             |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Handle asynchronous operations easily** | Things like API calls, reading files, or database queries take time — async functions let the program continue running without waiting. |
+| **2. Simplify Promise handling**             | Instead of chaining `.then()` and `.catch()`, you can use `await` for cleaner, more readable code.                                      |
+| **3. Avoid callback hell**                   | Makes code look synchronous while actually being asynchronous.                                                                          |
+| **4. Better error handling**                 | You can use `try...catch` instead of `.catch()` for cleaner control of async errors.                                                    |
+*/
