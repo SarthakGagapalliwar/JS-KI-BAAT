@@ -138,7 +138,10 @@
 // }
 
 
+// const arr = [1, [2, [3, [4]]]];
 
+// let ans= arr.flat(Infinity);
+// console.log(ans);
 
 
 // let arr=[1,2,[2,1,0], 5, 6];
